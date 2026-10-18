@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Ticket Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="booking-page">
+    <div class="container">
+
+        <h1>Cricket Stadium Ticket Booking</h1>
+
+        <div class="match-info">
+
+            <h2>{{ match.name }}</h2>
+
+            <p>
+                {{ match.team1 }}
+                vs
+                {{ match.team2 }}
+            </p>
+
+            <p>
+                Date: {{ match.date }}
+            </p>
+
+            <p>
+                Time: {{ match.time }}
+            </p>
+
+            <p>
+                Stadium: {{ match.stadium }}
+            </p>
+
+        </div>
+
+        <form action="/generate-ticket" method="POST">
+
+            <label>Full Name</label>
+
+            <input type="text" name="name" required>
+
+
+            <label>Email Address</label>
+
+            <input type="email" name="email" required>
+            <label>Phone Number</label>
+
+            <input type="tel" name="phone" required>
+            <label>Ticket Category</label>
+
+            <select name="category" required>
+
+                <option value="">
+                    Select Category
+                </option>
+
+                {% for category, price in ticket_prices.items() %}
+
+                <option value="{{ category }}">
+                    {{ category }} - ₹{{ price }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+            <label>Number of Tickets</label>
+
+            <input type="number" name="tickets" min="1" max="10" required>
+            <button type="submit">
+                Generate Ticket
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>
